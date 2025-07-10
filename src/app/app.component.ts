@@ -2,11 +2,11 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'app-rsvp',
-  templateUrl: './rsvp.component.html',
-  styleUrls: ['./rsvp.component.css']
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
 })
-export class RsvpComponent {
+export class AppComponent {
   rsvpForm: FormGroup;
   submitted = false;
   isLoading = false;
