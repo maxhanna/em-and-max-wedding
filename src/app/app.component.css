@@ -1,0 +1,146 @@
+.wedding-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    color: #333;
+    background-color: #fff9f9;
+    min-height: 100vh;
+}
+
+.wedding-header {
+    text-align: center;
+    margin-bottom: 3rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid #f0d6d6;
+}
+
+.wedding-header h1 {
+    font-size: 2.5rem;
+    color: #8b5a5a;
+    margin-bottom: 0.5rem;
+}
+
+.wedding-header h2 {
+    font-size: 1.8rem;
+    color: #a37a7a;
+    margin-bottom: 1rem;
+}
+
+.wedding-date {
+    font-size: 1.2rem;
+    color: #b48e8e;
+    font-style: italic;
+}
+
+.rsvp-section {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    margin-bottom: 2rem;
+}
+
+.rsvp-card h2,
+.thank-you-card h2 {
+    color: #8b5a5a;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #5a3e3e;
+    font-weight: 500;
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group textarea,
+.form-group select {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.form-group textarea {
+    min-height: 100px;
+}
+
+.radio-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.radio-group label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+}
+
+.error-message {
+    color: #d32f2f;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+}
+
+.submit-btn {
+    background-color: #8b5a5a;
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    font-size: 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s;
+}
+
+.submit-btn:hover {
+    background-color: #6d4545;
+}
+
+.submit-btn:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+.thank-you-card {
+    text-align: center;
+    padding: 2rem;
+}
+
+.thank-you-card h2 {
+    color: #5a8b5a;
+    margin-bottom: 1rem;
+}
+
+.wedding-footer {
+    text-align: center;
+    padding-top: 2rem;
+    border-top: 1px solid #f0d6d6;
+    color: #b48e8e;
+    font-size: 0.9rem;
+}
+
+@media (max-width: 600px) {
+    .wedding-container {
+        padding: 1rem;
+    }
+
+    .wedding-header h1 {
+        font-size: 2rem;
+    }
+
+    .wedding-header h2 {
+        font-size: 1.5rem;
+    } }
