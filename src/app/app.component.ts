@@ -31,10 +31,7 @@ export class AppComponent {
 
   async onSubmit() {
     this.submitted = true;
-
-    if (this.rsvpForm.invalid) {
-      return;
-    }
+    if (this.rsvpForm.invalid) return;
 
     this.isLoading = true;
 
@@ -49,7 +46,7 @@ export class AppComponent {
       });
       this.submitted = false;
     } else {
-      this.responseMessage = 'There was an error submitting your RSVP. Please try again later.';
+      this.responseMessage = result.message || 'There was an error submitting your RSVP. Please try again later.';
     }
   }
 
