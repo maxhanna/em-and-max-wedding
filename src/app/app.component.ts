@@ -12,6 +12,8 @@ export class AppComponent {
   submitted = false;
   isLoading = false;
   responseMessage = '';
+  emailUser = 'emilygriffiths';
+  emailDomain = 'maxhanna.ca';
 
   constructor(
     private fb: FormBuilder,
@@ -54,4 +56,7 @@ export class AppComponent {
   }
 
   get f() { return this.rsvpForm.controls; }
+  get mailtoLink(): string {
+    return `mailto:${this.emailUser}@${this.emailDomain}?subject=Wedding`;
+  }
 }

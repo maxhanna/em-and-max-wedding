@@ -95,6 +95,8 @@
 
   <footer class="wedding-footer">
     <p>With love, Emily & Max</p>
-    <p>Questions? Email us at emilyandmax@example.com</p>
+    <p>Questions? Email us at
+      <a [href]="mailtoLink">{{ emailUser }}@{{ emailDomain }}</a>
+    </p>
   </footer>
 </div>
