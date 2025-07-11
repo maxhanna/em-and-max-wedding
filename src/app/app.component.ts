@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { RsvpService } from './rsvp.service';
 
 @Component({
   selector: 'app-root',
@@ -12,10 +13,10 @@ export class AppComponent {
   isLoading = false;
   responseMessage = '';
 
-  // Placeholder for database service (to be implemented later)
-  // private rsvpService: RsvpService
-
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    private rsvpService: RsvpService
+  ) {
     this.rsvpForm = this.fb.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
@@ -28,7 +29,7 @@ export class AppComponent {
     });
   }
 
-  onSubmit() {
+  async onSubmit() {
     this.submitted = true;
 
     if (this.rsvpForm.invalid) {
@@ -37,27 +38,19 @@ export class AppComponent {
 
     this.isLoading = true;
 
-    // Placeholder for database submission
-    // this.rsvpService.submitRsvp(this.rsvpForm.value).subscribe(
-    //   response => {
-    //     this.isLoading = false;
-    //     this.responseMessage = 'Thank you for your RSVP! We look forward to celebrating with you.';
-    //     this.rsvpForm.reset();
-    //     this.submitted = false;
-    //   },
-    //   error => {
-    //     this.isLoading = false;
-    //     this.responseMessage = 'There was an error submitting your RSVP. Please try again later.';
-    //   }
-    // );
+    const result = await this.rsvpService.submitRsvp(this.rsvpForm.value);
 
-    // Simulating API call timeout
-    setTimeout(() => {
-      this.isLoading = false;
+    this.isLoading = false;
+
+    if (result.success) {
       this.responseMessage = 'Thank you for your RSVP! We look forward to celebrating with you.';
-      this.rsvpForm.reset();
+      this.rsvpForm.reset({
+        guestCount: 1
+      });
       this.submitted = false;
-    }, 1500);
+    } else {
+      this.responseMessage = 'There was an error submitting your RSVP. Please try again later.';
+    }
   }
 
   get f() { return this.rsvpForm.controls; }
