@@ -29,29 +29,27 @@ export default async function handler(req, res) {
             message
         } = req.body;
 
-        // Execute the query using Neon's serverless driver
-        await sql(
-            `INSERT INTO rsvps (
-                first_name,
-                last_name,
-                email,
-                attending,
-                guest_count,
-                dietary_restrictions,
-                song_request,
-                message
-            ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`,
-            [
-                firstName,
-                lastName,
-                email,
-                attending,
-                guestCount || null,
-                dietaryRestrictions || null,
-                songRequest || null,
-                message || null
-            ]
-        );
+        await sql`
+        INSERT INTO rsvps (
+          first_name,
+          last_name,
+          email,
+          attending,
+          guest_count,
+          dietary_restrictions,
+          song_request,
+          message
+        ) VALUES (
+          ${firstName},
+          ${lastName},
+          ${email},
+          ${attending},
+          ${guestCount || null},
+          ${dietaryRestrictions || null},
+          ${songRequest || null},
+          ${message || null}
+        )
+      `;
 
         res.setHeader('Access-Control-Allow-Origin', '*');
         return res.status(200).json({ success: true });
