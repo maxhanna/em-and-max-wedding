@@ -1,4 +1,4 @@
-const { Pool } = require('pg');
+import { neon } from '@neondatabase/serverless';
 
 export default async function handler(req, res) {
     // Handle CORS preflight
@@ -16,12 +16,7 @@ export default async function handler(req, res) {
     }
 
     try {
-        const pool = new Pool({
-            connectionString: process.env.DATABASE_URL,
-            ssl: {
-                rejectUnauthorized: false,
-            }
-        });
+        const sql = neon(process.env.DATABASE_URL);
 
         const {
             firstName,
@@ -34,8 +29,8 @@ export default async function handler(req, res) {
             message
         } = req.body;
 
-        // Execute query directly using pg
-        const result = await pool.query(
+        // Execute the query using Neon's serverless driver
+        await sql(
             `INSERT INTO rsvps (
                 first_name,
                 last_name,
@@ -45,8 +40,7 @@ export default async function handler(req, res) {
                 dietary_restrictions,
                 song_request,
                 message
-            ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
-            RETURNING id`,
+            ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`,
             [
                 firstName,
                 lastName,
@@ -60,10 +54,7 @@ export default async function handler(req, res) {
         );
 
         res.setHeader('Access-Control-Allow-Origin', '*');
-        return res.status(200).json({
-            success: true,
-            id: result.rows[0].id
-        });
+        return res.status(200).json({ success: true });
     } catch (error) {
         console.error('Database error:', error);
         return res.status(500).json({

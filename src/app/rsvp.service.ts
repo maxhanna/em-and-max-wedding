@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 })
 export class RsvpService {
     constructor() { }
- 
+
     async submitRsvp(rsvpData: any): Promise<{ success: boolean, message?: string }> {
         try {
             const response = await fetch('/api/submit-rsvp', {
@@ -16,13 +16,9 @@ export class RsvpService {
                 body: JSON.stringify(rsvpData)
             });
 
-            if (response.status === 405) {
-                throw new Error('Server rejected the request method');
-            }
-
             if (!response.ok) {
                 const error = await response.json();
-                throw new Error(error.error || 'Failed to submit RSVP');
+                throw new Error(error.details || 'Failed to submit RSVP');
             }
 
             return { success: true };
@@ -32,5 +28,5 @@ export class RsvpService {
                 message: error.message || 'Failed to submit RSVP'
             };
         }
-  }
+    }
 }

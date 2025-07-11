@@ -31,7 +31,10 @@ export class AppComponent {
 
   async onSubmit() {
     this.submitted = true;
-    if (this.rsvpForm.invalid) return;
+
+    if (this.rsvpForm.invalid) {
+      return;
+    }
 
     this.isLoading = true;
 
