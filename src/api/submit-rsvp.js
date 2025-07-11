@@ -19,7 +19,7 @@ export default async function handler(req, res) {
         const pool = new Pool({
             connectionString: process.env.DATABASE_URL,
             ssl: {
-                rejectUnauthorized: true,
+                rejectUnauthorized: false,
             }
         });
 
