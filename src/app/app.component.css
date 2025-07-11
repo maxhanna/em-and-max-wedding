@@ -15,9 +15,12 @@
     border-bottom: 1px solid #f0d6d6;
 }
 
-.wedding-header h1 {
+.wedding-header h1 span {
     font-size: 2.5rem;
     color: #8b5a5a;
+}
+
+.wedding-header h1 {
     margin-bottom: 0.5rem;
 }
 
