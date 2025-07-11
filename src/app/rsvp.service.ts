@@ -26,7 +26,8 @@ export class RsvpService {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Neon-Connection-String': environment.neonConnectionString
+                    'Neon-Connection-String': environment.neonConnectionString,
+                    'Authorization': `Bearer ${environment.neonApiKey}`
                 },
                 body: JSON.stringify({
                     query: `
