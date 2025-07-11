@@ -1,3 +1,5 @@
+const { Pool } = require('pg');
+
 export default async function handler(req, res) {
     // Handle CORS preflight
     if (req.method === 'OPTIONS') {
@@ -14,6 +16,13 @@ export default async function handler(req, res) {
     }
 
     try {
+        const pool = new Pool({
+            connectionString: process.env.DATABASE_URL,
+            ssl: {
+                rejectUnauthorized: true,
+            }
+        });
+
         const {
             firstName,
             lastName,
@@ -25,53 +34,41 @@ export default async function handler(req, res) {
             message
         } = req.body;
 
-        // Use Neon HTTP API
-        const response = await fetch(process.env.DATABASE_URL, {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${process.env.STACK_SECRET_SERVER_KEY}`,
-                'Neon-Project-Id': process.env.STACK_PROJECT_ID
-            },
-            body: JSON.stringify({
-                query: `
-            INSERT INTO rsvps (
-              first_name,
-              last_name,
-              email,
-              attending,
-              guest_count,
-              dietary_restrictions,
-              song_request,
-              message
+        // Execute query directly using pg
+        const result = await pool.query(
+            `INSERT INTO rsvps (
+                first_name,
+                last_name,
+                email,
+                attending,
+                guest_count,
+                dietary_restrictions,
+                song_request,
+                message
             ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
-          `,
-                params: [
-                    firstName,
-                    lastName,
-                    email,
-                    attending,
-                    guestCount || null,
-                    dietaryRestrictions || null,
-                    songRequest || null,
-                    message || null
-                ]
-            })
-        });
-
-        if (!response.ok) {
-            const error = await response.json();
-            throw new Error(error.message || 'Failed to submit RSVP via Neon API');
-        }
+            RETURNING id`,
+            [
+                firstName,
+                lastName,
+                email,
+                attending,
+                guestCount || null,
+                dietaryRestrictions || null,
+                songRequest || null,
+                message || null
+            ]
+        );
 
         res.setHeader('Access-Control-Allow-Origin', '*');
-        return res.status(200).json({ success: true });
+        return res.status(200).json({
+            success: true,
+            id: result.rows[0].id
+        });
     } catch (error) {
-        console.error('Neon API error:', error);
+        console.error('Database error:', error);
         return res.status(500).json({
             error: 'Failed to process RSVP',
             details: error.message
         });
     }
-  }
+}
