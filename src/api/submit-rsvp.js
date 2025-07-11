@@ -16,7 +16,8 @@ export default async function handler(req, res) {
     }
 
     try {
-        const sql = neon(process.env.DATABASE_URL);
+        const sql = neon('postgresql://neondb_owner:npg_KX7z2ZeshnBq@ep-sparkling-math-adb62lqw-pooler.c-2.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require');
+
 
         const {
             firstName,
