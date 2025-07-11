@@ -29,27 +29,28 @@ export default async function handler(req, res) {
             message
         } = req.body;
 
+        // Correct tagged-template usage
         await sql`
-        INSERT INTO rsvps (
-          first_name,
-          last_name,
-          email,
-          attending,
-          guest_count,
-          dietary_restrictions,
-          song_request,
-          message
-        ) VALUES (
-          ${firstName},
-          ${lastName},
-          ${email},
-          ${attending},
-          ${guestCount || null},
-          ${dietaryRestrictions || null},
-          ${songRequest || null},
-          ${message || null}
-        )
-      `;
+            INSERT INTO rsvps (
+                first_name,
+                last_name,
+                email,
+                attending,
+                guest_count,
+                dietary_restrictions,
+                song_request,
+                message
+            ) VALUES (
+                ${firstName},
+                ${lastName},
+                ${email},
+                ${attending},
+                ${guestCount || null},
+                ${dietaryRestrictions || null},
+                ${songRequest || null},
+                ${message || null}
+            )
+        `;
 
         res.setHeader('Access-Control-Allow-Origin', '*');
         return res.status(200).json({ success: true });
